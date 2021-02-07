@@ -11,5 +11,5 @@ const legPath = path.join(__dirname, 'data');
 
 
 readDirectory(legPath)
-    .then(filterFiles)
+    .then(data => filterFiles(data, '.srt'))
     .then(data => console.log(data))
