@@ -1,15 +1,25 @@
 const path = require('path');
 const {
-    readDirectory
+    readDirectory,
+    readFiles
 } = require('./utils/files');
 
 const {
-    filterFiles
+    filterFiles,
+    splitJoinContent,
+    removeEmptyLine,
+    removeTimeLines,
+    removeNumbers
 } = require('./utils/treat');
 
 const legPath = path.join(__dirname, 'data');
 
 
 readDirectory(legPath)
-    .then(data => filterFiles(data, '.srt'))
-    .then(data => console.log(data))
+    .then(files => filterFiles(files, '.srt'))
+    .then(paths => readFiles(paths))
+    .then(content => splitJoinContent(content))
+    .then(content => removeEmptyLine(content))
+    .then(content => removeTimeLines(content, '-->'))
+    .then(content => removeNumbers(content))
+    .then(console.log)

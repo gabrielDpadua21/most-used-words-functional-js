@@ -1,8 +1,6 @@
-const {
-    rejects
-} = require('assert');
 const fs = require('fs');
 const Path = require('path');
+
 
 function readDirectory(path) {
     return new Promise((resolve, reject) => {
@@ -16,6 +14,22 @@ function readDirectory(path) {
     })
 }
 
+function readFile(path) {
+    return new Promise((resolve, reject) => {
+        try {
+            const content = fs.readFileSync(path, {encoding: 'utf-8'});
+            resolve(content.toString());
+        } catch(err) {
+            reject(err);
+        }
+    });
+}
+
+function readFiles(paths) {
+    return Promise.all(paths.map(path => readFile(path)));
+}
+
 module.exports = {
-    readDirectory
+    readDirectory,
+    readFiles
 }

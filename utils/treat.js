@@ -11,6 +11,26 @@ const filterFiles = (files, extension) => {
     });
 }
 
+const splitJoinContent = content => {
+    return content.join('\n').split('\n');
+}
+
+const removeEmptyLine = contentArray => {
+    return contentArray.filter(line => line.trim())
+}
+
+const removeTimeLines = (contentArray, substring) => {
+    return contentArray.filter(line => !line.includes(substring))
+}
+
+const removeNumbers = contentArray => {
+    return contentArray.filter(line => line.search('[0-9]+') < 0)
+}
+
 module.exports = {
-    filterFiles
+    filterFiles,
+    splitJoinContent,
+    removeEmptyLine,
+    removeTimeLines,
+    removeNumbers
 }
