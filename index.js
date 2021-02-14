@@ -10,13 +10,15 @@ const {
     removeEmptyLine,
     removeTimeLines,
     removeNumbers,
-    replaceCaracter
+    replaceCaracter,
+    splitWords,
+    joinLines
 } = require('./utils/treat');
 
 const legPath = path.join(__dirname, 'data');
 
 const symbols = [
-    '.', '?', '-', ',', '"', '_', '<i>', 
+    '.', '?', '-', ',', '"', '_', '<i>',
     '</i>', '\r', '[', ']', '(', ')'
 ];
 
@@ -28,4 +30,7 @@ readDirectory(legPath)
     .then(removeTimeLines('-->'))
     .then(removeNumbers)
     .then(replaceCaracter(symbols))
+    .then(joinLines(' '))
+    .then(splitWords)
+    .then(removeEmptyLine)
     .then(console.log)

@@ -42,6 +42,16 @@ const replaceCaracter = (symbols) => {
     }
 }
 
+const joinLines = (separator) => {
+    return function(contentArray) {
+        return contentArray.join(separator);
+    }
+}
+
+const splitWords = contentArray => {
+    return contentArray.split(' ');
+}
+
 module.exports = {
     filterFiles,
     splitJoinContent,
@@ -49,4 +59,6 @@ module.exports = {
     removeTimeLines,
     removeNumbers,
     replaceCaracter,
+    splitWords,
+    joinLines
 }
