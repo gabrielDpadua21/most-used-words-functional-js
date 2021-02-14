@@ -15,6 +15,10 @@ const {
 
 const legPath = path.join(__dirname, 'data');
 
+const symbols = [
+    '.', '?', '-', ',', '"', '_', '<i>', 
+    '</i>', '\r', '[', ']', '(', ')'
+];
 
 readDirectory(legPath)
     .then(files => filterFiles(files, '.srt'))
@@ -23,5 +27,5 @@ readDirectory(legPath)
     .then(removeEmptyLine)
     .then(removeTimeLines('-->'))
     .then(removeNumbers)
-    .then(content => replaceCaracter(content, '\r'))
+    .then(replaceCaracter(symbols))
     .then(console.log)

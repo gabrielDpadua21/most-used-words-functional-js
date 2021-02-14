@@ -29,8 +29,17 @@ const removeNumbers = contentArray => {
     return contentArray.filter(line => line.search('[0-9]+') < 0)
 }
 
-const replaceCaracter = (contentArray, string) => {
-    return contentArray.map(line => line.replace(string, ''));
+const replaceCaracter = (symbols) => {
+    return function(contentArray) {
+        return contentArray.map(line => {
+            let newLine = line;
+            symbols.forEach(symbol => {
+                newLine = newLine.replace(symbol, '');
+            })
+
+            return newLine;
+        })
+    }
 }
 
 module.exports = {
