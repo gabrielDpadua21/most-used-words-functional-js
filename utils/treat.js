@@ -19,8 +19,10 @@ const removeEmptyLine = contentArray => {
     return contentArray.filter(line => line.trim())
 }
 
-const removeTimeLines = (contentArray, substring) => {
-    return contentArray.filter(line => !line.includes(substring))
+const removeTimeLines = (substring, contentArray) => {
+    return function(contentArray) {
+        return contentArray.filter(line => !line.includes(substring));
+    }
 }
 
 const removeNumbers = contentArray => {
