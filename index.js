@@ -19,9 +19,23 @@ const legPath = path.join(__dirname, 'data');
 
 const symbols = [
     '.', '?', '-', ',', '"', '_', '<i>',
-    '</i>', '\r', '[', ']', '(', ')'
+    '</i>', '\r', '[', ']', '(', ')', "'"
 ];
 
+function groupWords(words) {
+    return words.reduce((group, word) => {
+        const newWord = word.toLowerCase();
+        if(group[newWord]) {
+            group[newWord] += 1;
+        } else {
+            group[newWord] = 1;
+        }
+
+        return group;
+    }, {})
+}
+
+// Functions composition
 readDirectory(legPath)
     .then(files => filterFiles(files, '.srt'))
     .then(paths => readFiles(paths))
@@ -33,4 +47,5 @@ readDirectory(legPath)
     .then(joinLines(' '))
     .then(splitWords)
     .then(removeEmptyLine)
+    .then(groupWords)
     .then(console.log)
