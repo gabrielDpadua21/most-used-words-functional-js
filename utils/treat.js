@@ -27,10 +27,15 @@ const removeNumbers = contentArray => {
     return contentArray.filter(line => line.search('[0-9]+') < 0)
 }
 
+const replaceCaracter = (contentArray, string) => {
+    return contentArray.map(line => line.replace(string, ''));
+}
+
 module.exports = {
     filterFiles,
     splitJoinContent,
     removeEmptyLine,
     removeTimeLines,
-    removeNumbers
+    removeNumbers,
+    replaceCaracter,
 }

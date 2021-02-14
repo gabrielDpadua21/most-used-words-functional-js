@@ -9,7 +9,8 @@ const {
     splitJoinContent,
     removeEmptyLine,
     removeTimeLines,
-    removeNumbers
+    removeNumbers,
+    replaceCaracter
 } = require('./utils/treat');
 
 const legPath = path.join(__dirname, 'data');
@@ -22,4 +23,5 @@ readDirectory(legPath)
     .then(content => removeEmptyLine(content))
     .then(content => removeTimeLines(content, '-->'))
     .then(content => removeNumbers(content))
+    .then(content => replaceCaracter(content, '\r'))
     .then(console.log)
