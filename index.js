@@ -1,7 +1,8 @@
 const path = require('path');
 const {
     readDirectory,
-    readFiles
+    readFiles,
+    writeFile
 } = require('./utils/files');
 
 const {
@@ -12,28 +13,17 @@ const {
     removeNumbers,
     replaceCaracter,
     splitWords,
-    joinLines
+    joinLines,
+    groupWords,
+    sortByAttr
 } = require('./utils/treat');
 
 const legPath = path.join(__dirname, 'data');
 
 const symbols = [
     '.', '?', '-', ',', '"', '_', '<i>',
-    '</i>', '\r', '[', ']', '(', ')', "'"
+    '</i>', '\r', '[', ']', '(', ')', "'", '--'
 ];
-
-function groupWords(words) {
-    return words.reduce((group, word) => {
-        const newWord = word.toLowerCase();
-        if(group[newWord]) {
-            group[newWord] += 1;
-        } else {
-            group[newWord] = 1;
-        }
-
-        return group;
-    }, {})
-}
 
 // Functions composition
 readDirectory(legPath)
@@ -48,4 +38,6 @@ readDirectory(legPath)
     .then(splitWords)
     .then(removeEmptyLine)
     .then(groupWords)
+    .then(sortByAttr('qtde', 'desc'))
+    .then(data => writeFile(path.join(__dirname, 'data/result.csv'), data))
     .then(console.log)
