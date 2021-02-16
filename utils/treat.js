@@ -52,6 +52,24 @@ const splitWords = contentArray => {
     return contentArray.split(' ');
 }
 
+function groupWords(words) {
+    return Object.values(words.reduce((group, word) => {
+        const newWord = word.toLowerCase();
+        const qtde = group[newWord] ? group[newWord].qtde + 1 : 1;
+        group[newWord] = {word: newWord, qtde};
+        return group;
+    }, {}))
+}
+
+function sortByAttr(attr, ordem = 'asc') {
+    return function (array) {
+        const desc = (object1, object2) => object2[attr] - object1[attr];
+        const asc = (object1, object2) => object1[attr] - object2[attr];
+        return array.sort(ordem === 'asc' ? asc : desc);
+    }
+}
+
+
 module.exports = {
     filterFiles,
     splitJoinContent,
@@ -60,5 +78,7 @@ module.exports = {
     removeNumbers,
     replaceCaracter,
     splitWords,
-    joinLines
+    joinLines,
+    groupWords,
+    sortByAttr
 }
