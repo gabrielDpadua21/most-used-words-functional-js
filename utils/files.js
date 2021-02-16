@@ -5,9 +5,9 @@ const Path = require('path');
 function readDirectory(path) {
     return new Promise((resolve, reject) => {
         try {
-            let files = fs.readdirSync(path);
-            files = files.map(file => Path.join(path, file));
-            resolve(files);
+            const files = fs.readdirSync(path);
+            const completFiles = files.map(file => Path.join(path, file));
+            resolve(completFiles);
         } catch (err) {
             reject(err);
         }

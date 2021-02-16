@@ -32,12 +32,9 @@ const removeNumbers = contentArray => {
 const replaceCaracter = (symbols) => {
     return function(contentArray) {
         return contentArray.map(line => {
-            let newLine = line;
-            symbols.forEach(symbol => {
-                newLine = newLine.replace(symbol, '');
-            })
-
-            return newLine;
+            return symbols.reduce((acc,symbol) => {
+                return acc.split(symbol).join('')
+            }, line)
         })
     }
 }
