@@ -62,7 +62,7 @@ function sortByAttr(attr, ordem = 'asc') {
     return function (array) {
         const desc = (object1, object2) => object2[attr] - object1[attr];
         const asc = (object1, object2) => object1[attr] - object2[attr];
-        return array.sort(ordem === 'asc' ? asc : desc);
+        return [...array].sort(ordem === 'asc' ? asc : desc);
     }
 }
 
