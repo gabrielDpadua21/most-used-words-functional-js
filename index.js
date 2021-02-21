@@ -1,4 +1,7 @@
 const path = require('path');
+
+const composition = require('./utils/composition');
+
 const {
     readDirectory,
     readFiles,
@@ -25,19 +28,22 @@ const symbols = [
     '</i>', '\r', '[', ']', '(', ')', "'", '--'
 ];
 
-// Functions composition
-readDirectory(legPath)
-    .then(files => filterFiles(files, '.srt'))
-    .then(paths => readFiles(paths))
-    .then(content => splitJoinContent(content))
-    .then(removeEmptyLine)
-    .then(removeTimeLines('-->'))
-    .then(removeNumbers)
-    .then(replaceCaracter(symbols))
-    .then(joinLines(' '))
-    .then(splitWords)
-    .then(removeEmptyLine)
-    .then(groupWords)
-    .then(sortByAttr('qtde', 'desc'))
-    .then(data => writeFile(path.join(__dirname, 'data/result.csv'), data))
-    .then(console.log)
+const processWords = composition(
+    readDirectory,
+    filterFiles('.srt'),
+    readFiles,
+    splitJoinContent,
+    removeEmptyLine,
+    removeTimeLines('-->'),
+    removeNumbers,
+    replaceCaracter(symbols),
+    joinLines(' '),
+    splitWords,
+    removeEmptyLine,
+    groupWords,
+    sortByAttr('qtde'),
+    writeFile(path.join(__dirname, 'data/result.csv')),
+)
+
+processWords(legPath)
+    .then(console.log);

@@ -29,20 +29,22 @@ function readFiles(paths) {
     return Promise.all(paths.map(path => readFile(path)));
 }
 
-function writeFile(path, content) {
-    return new Promise((resolve, reject) => {
-        try {
-
-            content.map(line => {
-                fs.appendFileSync(path, line.word + ',' +line.qtde + '\n');
-            })
-
-            resolve(content)
-
-        } catch(err) {
-            reject(err);
-        }
-    })
+function writeFile(path) {
+    return function(content) {
+        return new Promise((resolve, reject) => {
+            try {
+    
+                content.map(line => {
+                    fs.appendFileSync(path, line.word + ',' +line.qtde + '\n');
+                })
+    
+                resolve(content)
+    
+            } catch(err) {
+                reject(err);
+            }
+        })
+    }
 }
 
 module.exports = {

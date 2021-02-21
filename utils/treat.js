@@ -1,14 +1,16 @@
-const filterFiles = (files, extension) => {
-    return new Promise((resolve, reject) => {
-        try {
-            files = files.filter(file => {
-                return file.endsWith(extension)
-            })
-            resolve(files);
-        } catch(err) {
-            reject(err);
-        }
-    });
+const filterFiles = (extension) => {
+    return function(files) {
+        return new Promise((resolve, reject) => {
+            try {
+                files = files.filter(file => {
+                    return file.endsWith(extension)
+                })
+                resolve(files);
+            } catch(err) {
+                reject(err);
+            }
+        });
+    }
 }
 
 const splitJoinContent = content => {
@@ -58,7 +60,7 @@ function groupWords(words) {
     }, {}))
 }
 
-function sortByAttr(attr, ordem = 'asc') {
+function sortByAttr(attr, ordem = 'desc') {
     return function (array) {
         const desc = (object1, object2) => object2[attr] - object1[attr];
         const asc = (object1, object2) => object1[attr] - object2[attr];
